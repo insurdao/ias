@@ -1,4 +1,5 @@
-pragma solidity ^0.6.7;
+// "SPDX-License-Identifier: LICENSED"
+pragma solidity ^0.8.1;
 
 import "ds-test/test.sol";
 

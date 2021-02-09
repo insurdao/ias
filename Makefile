@@ -1,4 +1,4 @@
-all    :; dapp build
+all    :; dapp --use solc:0.8.1 build
 clean  :; dapp clean
-test   :; dapp test
-deploy :; dapp create WepyContracts
+test   :; dapp --use solc:0.8.1 test
+deploy :; dapp --use solc:0.8.1 create WepyContracts
