@@ -1,5 +1,6 @@
-// "SPDX-License-Identifier: LICENSED"
-pragma solidity ^0.8.1;
+// SPDX-License-Identifier: MIT
+
+pragma solidity >=0.7.4;
 
 import "ds-test/test.sol";
 

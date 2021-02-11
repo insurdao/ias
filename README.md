@@ -1,6 +1,14 @@
 
 
+## Nix
 
+* [why-nix](https://medium.com/dapphub/dapp-tools-and-the-nix-package-manager-c4c692c87310)
+
+
+```
+openssl genrsa -des3 -passout pass:x -out keypair.key 2048
+
+```
 
 ## Solc
 
@@ -30,6 +38,10 @@ nix-env -iA dapp hevm seth solc \
 
 # add solc 0.8.1
 nix-env -iA solc-versions.solc_0_8_1 \
+  -if https://github.com/dapphub/dapptools/tarball/master
+
+# add solc 0.7.6
+nix-env -iA solc-versions.solc_0_7_4 \
   -if https://github.com/dapphub/dapptools/tarball/master
 ```
 
