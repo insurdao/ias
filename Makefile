@@ -1,7 +1,7 @@
-all    :; dapp --use solc:0.7.4 build
+all    :; dapp --use solc:0.8.1 build
 clean  :; dapp clean
-test   :; dapp --use solc:0.7.4 test
-deploy :; dapp --use solc:0.7.4 create WepyContracts
+test   :; dapp --use solc:0.8.1 test
+deploy :; dapp --use solc:0.8.1 create WepyContracts
 
 
 optimze:
