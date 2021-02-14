@@ -1,7 +1,11 @@
 // SPDX-License-Identifier: MIT
 
-pragma solidity >=0.7.4;
+pragma solidity >=0.8.1;
 
 import "ds-auth/auth.sol";
 
-contract WepyContracts is DSAuth {}
+contract Policy is DSAuth {
+
+
+
+}
