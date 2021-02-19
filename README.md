@@ -1,4 +1,16 @@
 
+## Best Practices
+
+* [contract-size-limit](https://soliditydeveloper.com/max-contract-size)
+
+## ERC20
+
+
+Dai [dai.sol] in makerdao repo has a nice ERC20 implementation, maybe we can
+follow it.
+
+* [eip-712-intro](https://medium.com/metamask/eip712-is-coming-what-to-expect-and-how-to-use-it-bb92fd1a7a26)
+* [eip-712](https://github.com/ethereum/EIPs/blob/master/EIPS/eip-712.md)
 
 ## Nix
 
@@ -15,6 +27,13 @@ openssl genrsa -des3 -passout pass:x -out keypair.key 2048
 
 * [0.8.1](https://github.com/ethereum/solidity/releases)
 
+
+## Assembly
+
+* [all-assembly](https://medium.com/@jeancvllr/solidity-tutorial-all-about-assembly-5acdfefde05c)
+* [evm-intro](https://medium.com/0xcode/the-ethereum-virtual-machine-evm-runtime-environment-d7969544d3dd)
+* [string-utils](https://github.com/Arachnid/solidity-stringutils/blob/master/src/strings.sol)
+* [bytes-lib](https://github.com/GNSPS/solidity-bytes-utils/blob/master/contracts/BytesLib.sol)
 
 ## Dapp Tools
 

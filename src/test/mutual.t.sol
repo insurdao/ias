@@ -1,16 +1,16 @@
 // SPDX-License-Identifier: MIT
 
-pragma solidity >=0.7.4;
+pragma solidity >=0.8.0;
 
 import "ds-test/test.sol";
 
-import "./WepyContracts.sol";
+import "../mutual.sol";
 
-contract WepyContractsTest is DSTest {
-    WepyContracts contracts;
+contract MutualTest is DSTest {
+    Mutual mutual;
 
     function setUp() public {
-        contracts = new WepyContracts();
+        mutual = new Mutual();
     }
 
     function testFail_basic_sanity() public {
