@@ -41,7 +41,7 @@ contract Mutual is DSAuth {
     bytes32 hashedGroup = keccak256(abi.encodePacked(name));
     bytes32 hashedPolicy = keccak256(abi.encodePacked(policy));
 
-    require(hasRole(DEFAULT_ADMIN_ROLE, msg.sender), "Caller is not an admin");
+    //require(hasRole(DEFAULT_ADMIN_ROLE, msg.sender), "Caller is not an admin");
     // require(groups(hashedGroup).length == 0, "Already added group");
 
     Group storage group = groups[hashedGroup];

@@ -3,9 +3,9 @@
 
 pragma solidity >=0.8.0;
 
-import "ds-auth/auth.sol";
+import "ds-note/note.sol";
 
-contract Claim is DSAuth {
+contract Claim is DSNote{
 
     // --- Auth ---
     mapping (address => uint256) public wards;
@@ -24,8 +24,6 @@ contract Claim is DSAuth {
     uint256 payout_paid;
     uint256 state;
     string[] stateChangeReasons;
-
-
 
 
 
