@@ -26,12 +26,17 @@ openssl genrsa -des3 -passout pass:x -out keypair.key 2048
 ## Architecture
 
 * [state-machine](https://fravoll.github.io/solidity-patterns/state_machine.html)
+* [contract-interactions](https://ethereumdev.io/interact-with-other-contracts-from-solidity/)
 
 ## Solc
 
 
 * [0.8.1](https://github.com/ethereum/solidity/releases)
 
+
+## Optimizations
+
+* [struct](https://medium.com/@novablitz/storing-structs-is-costing-you-gas-774da988895e)
 
 ## Assembly
 
