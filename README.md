@@ -22,6 +22,11 @@ openssl genrsa -des3 -passout pass:x -out keypair.key 2048
 
 ```
 
+
+## Architecture
+
+* [state-machine](https://fravoll.github.io/solidity-patterns/state_machine.html)
+
 ## Solc
 
 

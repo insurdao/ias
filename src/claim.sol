@@ -17,14 +17,30 @@ contract Claim is DSNote{
     }
 
     // --- Data ---
-    string  uuid;
-    bytes32 group;
-    address mediator;
-    uint256 payout_requested;
-    uint256 payout_paid;
-    uint256 state;
-    string[] stateChangeReasons;
+    uint        public creationTime = block.timestamp;  // Time the claim started [New]
+    string      public uuid;
+    bytes32     public group;
+    address     public mediator;
+    uint256     public payout_requested;
+    uint256     public payout_paid;
 
+    // --- State Machine ---
+
+    enum Stages {
+        New,       // [sent by member  ]
+        Review,    // [adjuster reviews] Approved,  // [ajuster approved]
+        Canceled,  // [member canceled ]
+        Rejected,  // [ajuster rejected]
+        Disputed,  // [member disagrees]
+        Paid,      // [ajuster paid it ]
+        Settled    // [rejected forever]
+    }
+
+    Stages public stage = Stages.New;
+    modifier atStage(Stages _stage) {
+        require(stage == _stage);
+        _;
+    }
 
 
 }
