@@ -103,6 +103,7 @@ seth send --value 0.1  0xfB6916095ca1df60bB79Ce92cE3Ea74c37c5d359
 
 * [security-and-gov](https://medium.com/coinmonks/voting-and-governance-in-security-tokens-1e3d041dabb8)
 * [gov-types](https://blog.makerdao.com/the-different-types-of-cryptocurrency-tokens-explained/)
+* [voting-example](https://github.com/xdaichain/voting-dapp-contracts/tree/master/contracts)
 
 ## Ethereum
 
