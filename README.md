@@ -22,11 +22,23 @@ openssl genrsa -des3 -passout pass:x -out keypair.key 2048
 
 ```
 
+
+## Architecture
+
+* [state-machine](https://fravoll.github.io/solidity-patterns/state_machine.html)
+* [contract-interactions](https://ethereumdev.io/interact-with-other-contracts-from-solidity/)
+* [struct-or-child-contract](https://ethereum.stackexchange.com/questions/8615/child-contract-vs-struct/8620)
+
 ## Solc
 
 
 * [0.8.1](https://github.com/ethereum/solidity/releases)
 
+
+## Optimizations
+
+* [struct](https://medium.com/@novablitz/storing-structs-is-costing-you-gas-774da988895e)
+* [gas-optimization](https://medium.com/coinmonks/gas-optimization-in-solidity-part-i-variables-9d5775e43dde)
 
 ## Assembly
 
@@ -85,3 +97,15 @@ seth balance 0x0cde80AD77Ab131510036A72b012a4A0F26C2ACC
 
 seth send --value 0.1  0xfB6916095ca1df60bB79Ce92cE3Ea74c37c5d359
 ```
+
+
+## Governance
+
+* [security-and-gov](https://medium.com/coinmonks/voting-and-governance-in-security-tokens-1e3d041dabb8)
+* [gov-types](https://blog.makerdao.com/the-different-types-of-cryptocurrency-tokens-explained/)
+
+## Ethereum
+
+
+* [inside-a-transaction](https://medium.com/@codetractio/inside-an-ethereum-transaction-fa94ffca912f)
+* [cheat-sheet](https://manojpramesh.github.io/solidity-cheatsheet/)

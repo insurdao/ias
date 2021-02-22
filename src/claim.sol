@@ -1,9 +1,12 @@
-
 // SPDX-License-Identifier: MIT
-
 pragma solidity >=0.8.0;
 
 import "ds-note/note.sol";
+
+/*
+ The claim state machine will check that every function call is
+ permitted to be executed in its current state.
+*/
 
 contract Claim is DSNote{
 
@@ -17,14 +20,38 @@ contract Claim is DSNote{
     }
 
     // --- Data ---
-    string  uuid;
-    bytes32 group;
-    address mediator;
-    uint256 payout_requested;
-    uint256 payout_paid;
-    uint256 state;
-    string[] stateChangeReasons;
+    uint        public creationTime = block.timestamp;  // Time the claim started [New]
+    string      public uuid;
+    bytes32     public group;
+    address     public mediator;
+    uint256     public payout_requested;
+    uint256     public payout_paid;
 
+    // --- State Machine ---
+
+    enum Stages {
+        New,       // [sent by member  ]
+        Review,    // [adjuster reviews] Approved,  // [ajuster approved]
+        Canceled,  // [member canceled ]
+        Rejected,  // [ajuster rejected]
+        Disputed,  // [member disagrees]
+        Paid,      // [ajuster paid it ]
+        Settled    // [rejected forever]
+    }
+
+    Stages public stage = Stages.New;
+    modifier atStage(Stages _stage) {
+        require(stage == _stage);
+        _;
+    }
+
+    modifier checkAllowed {
+        //conditionalTransitions();
+        require(states[currentStateId].allowedFunctions[msg.sig]);
+        _;
+    }
+
+    event Transition(bytes32 stateId, uint256 blockNumber);
 
 
 }
