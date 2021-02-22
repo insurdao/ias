@@ -1,9 +1,12 @@
-
 // SPDX-License-Identifier: MIT
-
 pragma solidity >=0.8.0;
 
 import "ds-note/note.sol";
+
+/*
+ The claim state machine will check that every function call is
+ permitted to be executed in its current state.
+*/
 
 contract Claim is DSNote{
 
@@ -41,6 +44,14 @@ contract Claim is DSNote{
         require(stage == _stage);
         _;
     }
+
+    modifier checkAllowed {
+        //conditionalTransitions();
+        require(states[currentStateId].allowedFunctions[msg.sig]);
+        _;
+    }
+
+    event Transition(bytes32 stateId, uint256 blockNumber);
 
 
 }

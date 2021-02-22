@@ -53,4 +53,9 @@ contract Mutual is DSAuth {
     group.policy = policies[hashedPolicy];
   }
 
+
+  function createClaim() public {
+  }
+
+
 }
