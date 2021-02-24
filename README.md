@@ -108,5 +108,7 @@ seth send --value 0.1  0xfB6916095ca1df60bB79Ce92cE3Ea74c37c5d359
 ## Ethereum
 
 
+* [poa-testnet](https://www.poa.network/for-users/wallets/metamask)
+* [chainids-networks](https://ethereum.stackexchange.com/questions/17051/how-to-select-a-network-id-or-is-there-a-list-of-network-ids/17101)
 * [inside-a-transaction](https://medium.com/@codetractio/inside-an-ethereum-transaction-fa94ffca912f)
 * [cheat-sheet](https://manojpramesh.github.io/solidity-cheatsheet/)
