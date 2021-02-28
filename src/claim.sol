@@ -23,35 +23,48 @@ contract Claim is DSNote{
     uint        public creationTime = block.timestamp;  // Time the claim started [New]
     string      public uuid;
     bytes32     public group;
-    address     public mediator;
-    uint256     public payout_requested;
-    uint256     public payout_paid;
+    address     public adjuster;
+    address     public claimer;
+    uint256     public payout;
+    State       public state;
 
     // --- State Machine ---
 
-    enum Stages {
-        New,       // [sent by member  ]
-        Review,    // [adjuster reviews] Approved,  // [ajuster approved]
-        Canceled,  // [member canceled ]
-        Rejected,  // [ajuster rejected]
-        Disputed,  // [member disagrees]
-        Paid,      // [ajuster paid it ]
-        Settled    // [rejected forever]
+    enum State {
+        NEW,       // [sent by member  ]
+        REVIEWING, // [adjuster reviews]
+        CANCELED,  // [member canceled ]
+        DECLINED,  // [ajuster declines]
+        DISPUTING, // [member disagrees]
+        PAID,      // [ajuster paid it ]
+        SETTLED    // [rejected forever]
     }
 
-    Stages public stage = Stages.New;
-    modifier atStage(Stages _stage) {
-        require(stage == _stage);
+    modifier atState(State state_) {
+        require(state == state_);
         _;
     }
 
     modifier checkAllowed {
         //conditionalTransitions();
-        require(states[currentStateId].allowedFunctions[msg.sig]);
+        //require(states[currentStateId].allowedFunctions[msg.sig]);
         _;
     }
 
     event Transition(bytes32 stateId, uint256 blockNumber);
 
+    constructor(bytes32 group_,
+                address adjuster_,
+                address claimer_,
+                uint256 payout_)  {
+        group      = group_;
+        adjuster   = adjuster_;
+        payout     = payout_;
+        claimer    = claimer_;
+        state      = State.NEW;
+    }
+
+
+    function review(address aju)
 
 }

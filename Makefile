@@ -1,7 +1,7 @@
 all    :; dapp --use solc:0.8.0 build
 clean  :; dapp clean
 test   :; dapp --use solc:0.8.0 test
-dkeeploy :; dapp --use solc:0.8.0 create Mutual
+deploy :; dapp --use solc:0.8.0 create Mutual
 
 
 optimze:
