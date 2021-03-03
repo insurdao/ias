@@ -35,6 +35,7 @@ contract Claim is DSNote{
     enum State {
         NEW,       // [sent by member  ]
         REVIEWING, // [adjuster reviews]
+        APPROVED,  // [adjuster approve]
         CANCELED,  // [member canceled ]
         DECLINED,  // [ajuster declines]
         DISPUTING, // [member disagrees]
