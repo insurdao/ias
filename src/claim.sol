@@ -6,6 +6,8 @@ import "ds-note/note.sol";
 /*
  The claim state machine will check that every function call is
  permitted to be executed in its current state.
+    TODO; log state transitions with timestamp
+    TODO: add authority owner to let to change adjuster
 */
 
 contract Claim is DSNote{
@@ -20,7 +22,7 @@ contract Claim is DSNote{
     }
 
     // --- Data ---
-    uint        public creationTime = block.timestamp;  // Time the claim started [New]
+    uint        public created = block.timestamp;  // Time the claim started [New]
     string      public uuid;
     bytes32     public group;
     address     public adjuster;
@@ -40,8 +42,22 @@ contract Claim is DSNote{
         SETTLED    // [rejected forever]
     }
 
-    modifier atState(State state_) {
+    // --- Modifiers ---
+
+    modifier when(State state_) {
         require(state == state_);
+        _;
+    }
+
+    modifier only(address guy) {
+        require(msg.sender == guy, 'access-denied');
+        _;
+    }
+
+    modifier timed() {
+        if (state == State.CANCELED && block.timestamp >= created) {
+            state = State.SETTLED;
+        }
         _;
     }
 
@@ -65,8 +81,7 @@ contract Claim is DSNote{
     }
 
 
-    function review() external {
-        require(msg.sender == adjuster, 'only-ajuster');
+    function review() external when(State.NEW) only(adjuster){
         transitionTo(State.REVIEWING);
     }
 
@@ -82,4 +97,6 @@ contract Claim is DSNote{
 
         }
     }
+
+
 }
