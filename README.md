@@ -38,6 +38,33 @@ openssl genrsa -des3 -passout pass:x -out keypair.key 2048
 
 ```
 
+## Dapp Tools
+
+* [dapp-tools](https://github.com/dapphub/dapptools)
+* [test-script-example](https://github.com/alext234/crypto-zombies-l5/blob/master/testnet_script.sh)
+
+
+```
+# upgrade
+nix-channel --update && nix-env --upgrade
+
+# testnet [point to the test account]
+dapp testnet
+export ETH_KEYSTORE=$HOME/sec/wallets/kovan
+export ETH_PASSWORD=$HOME/sec/wallets/kovan/pass
+export SETH_CHAIN=poa
+export chainid=$(seth --to-uint256 99)
+export ETH_GAS=3500000
+export ETH_RPC_URL=http://localhost
+export ETH_RPC_PORT=8545
+export ETH_FROM=$(cat ~/.dapp/testnet/8545/config/account)
+
+
+# send from
+export FROM=0x92e0ac9dCa97491838871fbaA18f85437711F832
+export TO=0x0cde80AD77Ab131510036A72b012a4A0F26C2ACC
+seth --to-wei 100 eth | xargs -I{} seth send --value {} -F $FROM $TO
+```
 
 ## Architecture
 
@@ -83,8 +110,8 @@ nix-env -iA dapp hevm seth solc \
   --substituters https://dapp.cachix.org \
   --trusted-public-keys dapp.cachix.org-1:9GJt9Ja8IQwR7YW/aF0QvCa6OmjGmsKoZIist0dG+Rs=
 
-# add solc 0.8.1
-nix-env -iA solc-versions.solc_0_8_1 \
+# add solc 0.8.3
+nix-env -iA solc-versions.solc_0_8_3 \
   -if https://github.com/dapphub/dapptools/tarball/master
 
 # add solc 0.7.6
@@ -92,6 +119,15 @@ nix-env -iA solc-versions.solc_0_7_4 \
   -if https://github.com/dapphub/dapptools/tarball/master
 ```
 
+## Testnet
+
+```
+# start the testnet 
+dapp testnet
+
+# clean genesis and chain data
+rm -rf ~/.dapp/testnet
+```
 
 ## Seth
 

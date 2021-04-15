@@ -1,7 +1,7 @@
-all    :; dapp --use solc:0.8.0 build
+all    :; dapp --use solc:0.8.1 build
 clean  :; dapp clean
-test   :; dapp --use solc:0.8.0 test
-deploy :; dapp --use solc:0.8.0 create Mutual
+test   :; dapp --use solc:0.8.1 test
+deploy :; dapp --use solc:0.8.1 create Mutual
 
 
 optimze:
@@ -13,9 +13,11 @@ optimze:
 
 
 
+# update nix
 update-nix:
 	nix-channel --update && nix-env --upgrade
 
+# download list of layer2 networks
 get-chains:
 	wget -O doc/chains.json https://chainid.network/chains.json
 

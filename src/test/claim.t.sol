@@ -15,6 +15,7 @@ contract PolicyTest is DSTest {
 
     function testSuccess_setReview() public {
         claim.review();
+        //assertTrue(true);
     }
 
     function testSuccess_setPayout() public {

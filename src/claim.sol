@@ -94,9 +94,9 @@ contract Claim is DSNote{
             require(state == State.NEW, 'only-new-to-reviewing-allowed');
             state = State.REVIEWING;
         }
-        if(to == State.REVIEWING) {
-
-        }
+        // if(to == State.REVIEWING) {
+        //
+        // }
     }
 
 
