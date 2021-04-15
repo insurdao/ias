@@ -1,4 +1,9 @@
 
+```
+ _ __ _ ____ _  _ ____ ___  ____ ____
+ | | \| ==== |__| |--< |__> |--| [__]
+
+```
 
 ## Code Style [original](https://github.com/makerdao/dss/blob/master/DEVELOPING.md)
 
