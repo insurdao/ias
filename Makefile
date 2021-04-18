@@ -1,6 +1,6 @@
 all    :; dapp --use solc:0.8.1 build
 clean  :; dapp clean
-test   :; dapp --use solc:0.8.1 test
+test   :; dapp --use solc:0.8.1 -v test
 deploy :; dapp --use solc:0.8.1 create Mutual
 
 

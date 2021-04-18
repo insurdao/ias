@@ -9,13 +9,14 @@ import "../claim.sol";
 contract PolicyTest is DSTest {
     Claim claim;
 
+    // me is also the claim adjuster, so it can access the claim.review()
     function setUp() public {
-        claim = new Claim(bytes32('my-group'), address(123), address(123), 100);
+        address me = address(this);
+        claim = new Claim(bytes32('my-group'), me, me, 100);
     }
 
-    function testSuccess_setReview() public {
+    function testSucce_setReview() public {
         claim.review();
-        //assertTrue(true);
     }
 
     function testSuccess_setPayout() public {

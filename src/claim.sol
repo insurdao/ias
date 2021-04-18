@@ -89,7 +89,7 @@ contract Claim is DSNote{
 
     function transitionTo(State to) internal {
         require(to != State.NEW, 'new-state-not-allowed');
-        require(to == state, 'same-state-not-allowed');
+        require(to != state, 'same-state-not-allowed');
         if(to == State.REVIEWING) {
             require(state == State.NEW, 'only-new-to-reviewing-allowed');
             state = State.REVIEWING;
