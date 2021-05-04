@@ -5,9 +5,9 @@
 # export ETH_FROM=0xd08f67044c53d723686e002c5b880f73674e164c
 
 # Look for my key files in a custom directory
-export ETH_KEYSTORE=$HOME/sec/wallets
+export ETH_KEYSTORE=$HOME/sec/wallets/kovan/UTC--2021-02-04T16-24-22.712992619Z--c97cdc8eb17f0e79cd4080bd5eb500355bec649a
 
-export ETH_PASSWORD=$HOME/sec/wallets/pass
+export ETH_PASSWORD=$HOME/sec/wallets/kovan/pass
 
 # this add
 export ETH_FROM=0xc97cdc8eb17f0e79cd4080bd5eb500355bec649a

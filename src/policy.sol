@@ -3,6 +3,11 @@
 pragma solidity >=0.8.0;
 
 
+contract ClaimLike {
+
+}
+
+
 contract Policy {
     string      public name;                // Policy name
     uint256     public max_premium;         // Max cap premium for this policy
@@ -10,6 +15,14 @@ contract Policy {
     uint256     public min_members;         // Minimum members to start coverage
     uint256     public premium;             // Dynamic paid premium
     uint256     public payout;              // Dynamic payout coverage
+
+    uint256 created;
+    address manager;
+    address[] members;
+    address token;
+    uint256 totalBalance;
+    mapping (address => ClaimLike) claims;
+    mapping (address => uint256) balances;
 
     event PayoutSet(uint256 indexed payout);
 
