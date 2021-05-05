@@ -12,7 +12,6 @@ optimze:
 	dapp --use solc:0.8.1 build
 
 
-
 # update nix
 update-nix:
 	nix-channel --update && nix-env --upgrade

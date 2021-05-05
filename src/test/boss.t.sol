@@ -4,13 +4,13 @@ pragma solidity >=0.8.0;
 
 import "ds-test/test.sol";
 
-import "../mutual.sol";
+import "../boss.sol";
 
-contract MutualTest is DSTest {
-    Mutual mutual;
+contract BossTest is DSTest {
+    Boss boss;
 
     function setUp() public {
-        mutual = new Mutual();
+        boss = new Boss();
     }
 
     function testFail_basic_sanity() public {
