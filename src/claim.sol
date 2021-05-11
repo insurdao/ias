@@ -44,7 +44,6 @@ contract Claim is DSNote{
     }
 
     // --- Modifiers ---
-
     modifier when(State state_) {
         require(state == state_);
         _;
@@ -87,16 +86,24 @@ contract Claim is DSNote{
     }
 
 
+    // --- State Machine Rules ---
     function transitionTo(State to) internal {
         require(to != State.NEW, 'new-state-not-allowed');
         require(to != state,     'same-state-not-allowed');
+        // claim-adjuster start reviewing
         if(to == State.REVIEWING) {
             require(state == State.NEW, 'only-new-to-reviewing-allowed');
             state = State.REVIEWING;
         }
-        // if(to == State.REVIEWING) {
-        //
-        // }
+        // claim-adjuster aprove or decline
+        if(to == State.APPROVED) {
+            require(state == State.REVIEWING, 'only-reviewing-approved-allowed');
+            state = State.APPROVED;
+        }
+        if(to == State.DECLINED) {
+            require(state == State.REVIEWING, 'only-reviewing-declined');
+            state = State.DECLINED;
+        }
     }
 
 
