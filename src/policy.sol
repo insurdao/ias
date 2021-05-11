@@ -16,16 +16,21 @@ contract Policy {
     uint256     public premium;             // Dynamic paid premium
     uint256     public payout;              // Dynamic payout coverage
 
-    uint256 created;
-    address manager;
-    address[] members;
-    address token;
-    uint256 totalBalance;
-    mapping (address => ClaimLike) claims;
-    mapping (address => uint256) balances;
+    uint256     public created;
+    address     public manager;
+    address[]   public members;
+    address     public token;
+    uint256     public totalBalance;
+    bool        public live;
+    mapping (address => ClaimLike) public claims;
+    mapping (address => uint256)   public balances;
 
+
+    // --- EVENTS ---
     event PayoutSet(uint256 indexed payout);
 
+
+    // --- INIT ----
     constructor(string memory name_,
                 uint256 max_premium_,
                 uint256 max_payout_,
@@ -40,13 +45,15 @@ contract Policy {
     }
 
 
-    function setPayout(uint256 payout_) external {
-        require(payout_ <= max_payout, "payout should be less than the cap");
-        payout = payout_;
+    // --- FUNCS ---
+    function setPayout(uint256 payout) external {
+        require(payout <= max_payout, "payout should be less than the cap");
+        payout = payout;
     }
 
-    function setPremium(uint256 premium_) external {
-        premium = premium_;
+    function setPremium(uint256 premium) external {
+        require(premium <= max_premium);
+        premium = premium;
     }
 
 }
