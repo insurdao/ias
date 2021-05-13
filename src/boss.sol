@@ -26,6 +26,7 @@ contract Boss is DSAuth, DSNote {
   // Policy repository [to be used in the groups]
   //Policy policy[];
 
+
   constructor() {
 
   }

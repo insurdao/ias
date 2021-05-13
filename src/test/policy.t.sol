@@ -10,7 +10,7 @@ contract PolicyTest is DSTest {
     Policy policy;
 
     function setUp() public {
-        policy = new Policy("car", 100, 10, 5);
+        policy = new Policy("car", 100, 100, 100, 100, 100, 100, address(123));
     }
 
     function testSuccess_setPayout() public {
