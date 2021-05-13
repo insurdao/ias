@@ -1,5 +1,4 @@
 // SPDX-License-Identifier: MIT
-
 pragma solidity >=0.8.0;
 
 
@@ -27,6 +26,25 @@ contract Policy {
     mapping (address => ClaimLike) public claims;
     mapping (address => uint256)   public balances;
 
+    // --- Auth ---
+    mapping (address => uint256) public wards;
+    function rely(address usr) external note auth { wards[usr] = 1; }
+    function deny(address usr) external note auth { wards[usr] = 0; }
+
+    mapping(address => mapping (address => uint)) public can;
+    function hope(address usr) external note { can[msg.sender][usr] = 1; }
+    function nope(address usr) external note { can[msg.sender][usr] = 0; }
+    function wish(address bit, address usr) internal view returns (bool) {
+        return either(bit == usr, can[bit][usr] == 1);
+    }
+
+    // --- MODIFIERS ---
+    modifier auth {
+        require(wards[msg.sender] == 1, "claim/not-authorized");
+        _;
+    }
+
+    // --- DATA ---
 
     struct Member {
         address     wallet;
