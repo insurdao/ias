@@ -4,6 +4,10 @@ test   :; dapp --use solc:0.8.3 -v test
 deploy :; dapp --use solc:0.8.3 create Mutual
 
 
+# auto-recompile [install inotify-tools before]
+watch:
+	while inotifywait -e close_write ./src/*.sol; do dapp --use solc:0.8.3 build; done
+
 optimze:
 	DAPP_STANDARD_JSON="config.json" \
 	DAPP_SOLC_OPTIMIZE=true \

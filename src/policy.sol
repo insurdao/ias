@@ -1,6 +1,7 @@
 // SPDX-License-Identifier: MIT
 pragma solidity >=0.8.0;
 
+import "ds-note/note.sol";
 
 contract ClaimLike {
 
@@ -8,7 +9,7 @@ contract ClaimLike {
 
 
 // TODO setup number types [wad, etc..]
-contract Policy {
+contract Policy is DSNote {
     string      public name;                // Policy name
     uint256     public premium;             // Dynamic paid premium
     uint256     public premium_max;         // Max cap premium for this policy
@@ -73,7 +74,7 @@ contract Policy {
         payout_min  = payout_min_;
         payout_max  = payout_max_;
         members_min = members_min_;
-        manager     = msg.sender;
+        manager     = manager_;
     }
 
     // --- START & EMERGENCY STOP COVERAGE
@@ -96,6 +97,17 @@ contract Policy {
     function setPremium(uint256 premium_) external {
         require(premium_ <= premium_max);
         premium = premium_;
+    }
+
+
+
+    // --- MATH ---
+
+    function either(bool x, bool y) internal pure returns (bool z) {
+        assembly{ z := or(x, y)}
+    }
+    function both(bool x, bool y) internal pure returns (bool z) {
+        assembly{ z := and(x, y)}
     }
 
 }

@@ -10,7 +10,7 @@ contract BossTest is DSTest {
     Boss boss;
 
     function setUp() public {
-        boss = new Boss();
+        //boss = new Boss();
     }
 
     function testFail_basic_sanity() public {

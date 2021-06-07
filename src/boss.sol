@@ -12,18 +12,12 @@ interface PolicyLike {
   // add all policy functions here
 }
 
-contract PolicyHandler {
-  constructor(address policy) public {
-    PolicyLike(policy).hope(msg.sender);
-  }
-}
 
 interface ClaimLike {}
 
 contract Boss is DSAuth, DSNote {
   mapping (bytes32 => address) public policies;
   mapping (address => mapping (bytes32 => mapping (address => bool))) public allows;
-  address public owner;
 
   // event NewPolicy(address indexed guy, bytes12 cdp);
 
@@ -34,16 +28,11 @@ contract Boss is DSAuth, DSNote {
 
 
   constructor(address owner_) {
-    policyId = 0;
     owner = owner_;
   }
 
 
   function open(address token, address usr) public note returns (uint) {
-    require(usr != address(0), "usr-address-0");
-    polid = add(polid, 1);
-    policies[polid] = address(new PolicyHandler())
-
 
   }
 
