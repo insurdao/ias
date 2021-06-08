@@ -13,7 +13,9 @@ import "ds-note/note.sol";
 contract Group is DSNote {
     string      public name;                // Group name
     address     public manager;
-    address[]   public members;
+    address     public adjuster;
+    int         public policy;              // Policy template terms
+    bool        public live;                // Group is live in production
 
     // --- Auth ---
     mapping (address => uint256) public wards;
@@ -34,7 +36,6 @@ contract Group is DSNote {
     }
 
     // --- DATA ---
-
     struct Vault {
         uint256 ink;   // Locked Collateral  [wad]
         uint256 art;   // Normalised Debt    [wad]
@@ -44,13 +45,23 @@ contract Group is DSNote {
     mapping (bytes32 => mapping (address => Vault )) public vaults;
 
     // --- INIT ----
-    constructor(string memory name_,
-                address manager_) {
+    constructor(string memory name_, address manager_, int policy_) {
 
         name        = name_;
         manager     = manager_;
+        policy      = policy_;
     }
 
+
+    // --- MANAGEMENT ---
+    function set(address adjuster_) public {
+        adjuster = adjuster_;
+    }
+
+
+    function join(address vault_) public {
+
+    }
 
 
     // --- MATH ---

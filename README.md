@@ -10,6 +10,41 @@
 
 * [dapp-tools-tutorial](https://medium.com/coinmonks/use-dapp-tools-for-ethereum-contract-development-2775d8b2ba0)
 
+
+## Actors
+
+The main 'actors' are the vault, claim and risk. 
+
+- Vault: has the minimum collateral to keep a member covered
+- Claim: get funds from all vaults to prepare, approve or decline a claim, and
+    execute its payment [see in dss how flap.sol works with vaults]
+- Risk: keeps calculating the minimum in the vault members, and decided who is
+    covered, notify for more deposits. It has the balance of all the vaults
+    subscribed into this policy. Every vault transation notifies the risk, and
+    it recalculates the minimum for all the vaults.
+- Policy: a container with policies approved by the insurdao gov commitee. The
+    policy terms are copied to a Group instance, and the group will also connect
+    the calculation risk to a plugable risk contract. Insurdao gov will have the
+    right to change the plugable risk policy [but with no access to the vaults,
+    only claim contract can access it]
+- Group: it joins a policy, risk, vaults. 
+
+
+## Flow
+
+
+The member's invitation contains the policy address this member was invited, so
+when member deposits to his vault the minimum collateral, it notifies the policy
+and he becomes covered. When his vault becomes under-collaterized, 
+
+- Broker creates policy instance
+- Broker adds claim-adjuster
+- Broker invites members
+- Member deposits $ in vaults
+- Member authorizes policy template to debit from vault
+- Policy checks if it has minimum cash to start
+
+
 ## Code Style [original](https://github.com/makerdao/dss/blob/master/DEVELOPING.md)
 
 This is obviously opinionated and you may even disagree, but here are the considerations that make this code look like it does:
