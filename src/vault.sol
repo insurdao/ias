@@ -8,20 +8,25 @@ import "ds-note/note.sol";
 */
 
 contract Vault is DSNote{
+    bool        public live;
     int         public vid;                 // Auto-increment
     string      public name;                // Group name
-    address     public manager;
+    address     public admin;
     address[]   public members;
 
     mapping (uint => List)    public list;  // vid => Prev & Next vid (double linked list)
 
+    struct Vault {
+        uint256 locked;                     // Locked Collateral [amount]
+        uint256 debt;                       // Normalised Debt   [amount]
+    }
 
     struct List {
         uint prev;
         uint next;
     }
 
-    // --- AUTH ---
+    // --- Auth ---
     mapping (address => uint256) public wards;
     function rely(address usr) external note auth { wards[usr] = 1; }
     function deny(address usr) external note auth { wards[usr] = 0; }
@@ -33,25 +38,39 @@ contract Vault is DSNote{
         return either(bit == usr, can[bit][usr] == 1);
     }
 
-    // --- MODIFIERS ---
+    // --- Modifiers ---
     modifier auth {
         require(wards[msg.sender] == 1, "vault/not-authorized");
         _;
     }
 
-    // --- DATA ---
+    // --- Data ---
     mapping (bytes32 => mapping (address => uint256 )) public vaults;
 
-    // --- INIT ----
+    // --- Init ----
     constructor(string memory name_,
-                address manager_) {
+                address admin_) {
 
         name        = name_;
-        manager     = manager_;
+        admin       = admin_;
+        live        = true;
     }
 
 
-    // --- MATH ---
+    // --- Manipulation ---
+    function fill(bytes32 index, address u) external note {
+        require(live == true, "vault/not-live");
+
+    }
+
+
+    // --- Administration ---
+    function stop() external note auth {
+        live = false;
+    }
+
+
+    // --- Math ---
 
     function either(bool x, bool y) internal pure returns (bool z) {
         assembly{ z := or(x, y)}
