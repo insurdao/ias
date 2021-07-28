@@ -11,6 +11,18 @@
 * [dapp-tools-tutorial](https://medium.com/coinmonks/use-dapp-tools-for-ethereum-contract-development-2775d8b2ba0)
 
 
+
+## Dependencies
+
+If you want to install dependencies from scratch and avoid an inter-dependency
+conflict, install in this following order:
+
+```
+rm -rf lib/*
+dapp install ds-note
+dapp install ds-auth
+```
+
 ## Actors
 
 The main 'actors' are the vault, claim and risk. 
