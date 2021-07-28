@@ -1,7 +1,7 @@
-all    :; dapp --use solc:0.8.3 build
+all    :; dapp --use solc:0.8.6 build
 clean  :; dapp clean
-test   :; dapp --use solc:0.8.3 -v test
-deploy :; dapp --use solc:0.8.3 create Mutual
+test   :; dapp --use solc:0.8.6 -v test
+deploy :; dapp --use solc:0.8.6 create Mutual
 
 
 # auto-recompile [install inotify-tools before]
