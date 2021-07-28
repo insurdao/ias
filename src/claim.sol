@@ -38,7 +38,7 @@ contract Claim is DSNote{
         REVIEWING, // [adjuster reviews]
         APPROVED,  // [adjuster approve]
         CANCELED,  // [member canceled ]
-        DECLINED,  // [ajuster declines]
+        REJECTED,  // [ajuster rejects ]
         DISPUTING, // [member disagrees]
         PAID,      // [ajuster paid it ]
         SETTLED    // [rejected forever]
@@ -89,21 +89,46 @@ contract Claim is DSNote{
 
     // --- State Machine Rules ---
     function transitionTo(State to) internal {
+        // sanity check
         require(to != State.NEW, 'new-state-not-allowed');
         require(to != state,     'same-state-not-allowed');
         // claim-adjuster start reviewing
         if(to == State.REVIEWING) {
             require(state == State.NEW, 'only-new-to-reviewing-allowed');
+            require(msg.sender == adjuster);
             state = State.REVIEWING;
         }
-        // claim-adjuster aprove or decline
+        // claimer decides to cancel while adjuster was reviewing
+        if(to == State.CANCELED) {
+            require(state == State.REVIEWING, 'only-cancel-from-reviewing');
+            require(msg.sender == claimer);
+            state = State.REVIEWING;
+        }
+        // claim-adjuster aproves after reviewing or after claimer wins a dispute
         if(to == State.APPROVED) {
-            require(state == State.REVIEWING, 'only-reviewing-approved-allowed');
+            require(state == State.REVIEWING || 
+                    state == State.DISPUTING, 'only-reviewing-approved-allowed');
+            require(msg.sender == adjuster);
             state = State.APPROVED;
         }
-        if(to == State.DECLINED) {
-            require(state == State.REVIEWING, 'only-reviewing-declined');
-            state = State.DECLINED;
+        // claim-adjuster rejects after reviewing or after adjuster wins a dispute
+        if(to == State.REJECTED) {
+            require(state == State.REVIEWING || 
+                    state == State.DISPUTING, 'only-reviewing-declined');
+            require(msg.sender == adjuster);
+            state = State.REJECTED;
+        }
+        // claimer dislikes the rejecting and starts an off-chain dispute
+        if(to == State.DISPUTING) {
+            require(state == State.REJECTED, 'only-disputes-from-rejected');
+            require(msg.sender == claimer);
+            state = State.DISPUTING;
+        }
+        // adjuster finally pays the claimer
+        if(to == State.PAID) {
+            require(state == State.APPROVED, 'only-paid-from-disputed');
+            require(msg.sender == adjuster);
+            state = State.PAID;
         }
     }
 

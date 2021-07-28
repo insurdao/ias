@@ -58,10 +58,10 @@ contract Vault is DSNote{
 
 
     // --- Manipulation ---
-    function fill(bytes32 index, address u) external note {
-        require(live == true, "vault/not-live");
-
-    }
+    // function fill(bytes32 index, address u) external note {
+    //     require(live == true, "vault/not-live");
+    //
+    // }
 
 
     // --- Administration ---
