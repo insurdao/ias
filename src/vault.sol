@@ -16,7 +16,7 @@ contract Vault is DSNote{
 
     mapping (uint => List)    public list;  // vid => Prev & Next vid (double linked list)
 
-    struct Vault {
+    struct Urn {
         uint256 locked;                     // Locked Collateral [amount]
         uint256 debt;                       // Normalised Debt   [amount]
     }
