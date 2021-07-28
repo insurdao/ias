@@ -9,15 +9,18 @@ deploy :; dapp --use solc:$(SOLC_VERSION) create Mutual
 
 
 # auto-recompile [install inotify-tools before]
-watch:
+watch-compile:
 	while inotifywait -e close_write ./src/*.sol; do dapp --use solc:$(SOLC_VERSION) build; done
+
+watch-test:
+	while inotifywait -e close_write ./src/*.sol; do dapp --use solc:$(SOLC_VERSION) -v test; done
 
 optimze:
 	DAPP_STANDARD_JSON="config.json" \
 	DAPP_SOLC_OPTIMIZE=true \
 	DAPP_SOLC_OPTIMIZE_RUNS=1 \
 	SOLC_FLAGS="--optimize --optimize-runs=1" \
-	dapp --use solc:0.8.1 build
+	dapp --use solc:$(SOLC_VERSION) build
 
 
 # update nix

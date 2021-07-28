@@ -86,7 +86,6 @@ contract Claim is DSNote{
         transitionTo(State.REVIEWING);
     }
 
-
     // --- State Machine Rules ---
     function transitionTo(State to) internal {
         // sanity check
