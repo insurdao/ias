@@ -9,8 +9,40 @@
 ## Introduction
 
 * [dapp-tools-tutorial](https://medium.com/coinmonks/use-dapp-tools-for-ethereum-contract-development-2775d8b2ba0)
+* [dapp-overview-video](https://www.youtube.com/watch?v=lPinWgaNceM)
 
 
+Deployer and Factories are sent (deployed) to the network using seth.
+
+
+## Quick Vocab
+
+Risk Parameters:
+
+* max claim % over the vault per claim request
+* max consecutive claims per period
+
+
+* wad: some quantity of tokens, usually as a fixed point integer with 10^18 decimal places.
+* ray: a fixed point integer, with 10^27 decimal places.
+* rad: a fixed point integer, with 10^45 decimal places.
+* file: administer some configuration value
+* guy, usr: some address
+* ilk - collateral type, each has its own set of risk parameters
+* valut - the solvency
+
+* auth: check whether an address can call this method
+* ward: an address that is allowed to call authed methods
+* rely: allow an address to call authed methods
+* deny: disallow an address from calling authed methods
+
+* sin: anticoin tokens (system debt, not belonging to any urn)
+
+* urn: a specific CDP
+    - ink: collateral balance
+    - art: outstanding stablecoin debt
+* grab: liquidate a CDP
+* heal: create / destroy equal quantities of stablecoin and system debt (vice)
 
 ## Dependencies
 

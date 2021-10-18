@@ -4,7 +4,7 @@ pragma solidity >=0.8.0;
 import "ds-note/note.sol";
 
 
-/// Policy terms approved by insurdao gov
+/// We setup here the product parameters, and keep our member state
 
 
 // TODO setup number types [wad, etc..]

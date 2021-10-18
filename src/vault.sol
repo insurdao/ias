@@ -4,26 +4,29 @@ pragma solidity >=0.8.0;
 import "ds-note/note.sol";
 
 /*
-  Vault
+The single source of truth for the Insurdao Protocol. It contains the accounting system of
+the core Vault, internal balances for each memeber, and collateral state. The Vault has no external dependencies
+and maintains the central "Accounting Invariants" of the Insurdao  Protocol. It houses the public
+interface for Vault management, allowing urn (Vault) owners to adjust their Vault state balances.
+It also contains the public interface for Vault fungibility, allowing urn (Vault) owners to transfer,
+split, and merge Vaults. Excluding these interfaces, the Vault is accessed through trusted smart
+contract modules. Every vault will have a mutuality treasury, and keep tracking of every deposit and member
+ledger cashflows, facilitating audit, emergency shutdown and disolution.
 */
 
 contract Vault is DSNote{
+    // --- Data ---
+    mapping (bytes32 => mapping (address => uint256 )) public vaults;
+
     bool        public live;
     int         public vid;                 // Auto-increment
-    string      public name;                // Group name
+    string      public name;                // Vault name
     address     public admin;
     address[]   public members;
-
-    mapping (uint => List)    public list;  // vid => Prev & Next vid (double linked list)
 
     struct Urn {
         uint256 locked;                     // Locked Collateral [amount]
         uint256 debt;                       // Normalised Debt   [amount]
-    }
-
-    struct List {
-        uint prev;
-        uint next;
     }
 
     // --- Auth ---
@@ -44,24 +47,13 @@ contract Vault is DSNote{
         _;
     }
 
-    // --- Data ---
-    mapping (bytes32 => mapping (address => uint256 )) public vaults;
 
     // --- Init ----
-    constructor(string memory name_,
-                address admin_) {
-
+    constructor(string memory name_, address owner_) {
         name        = name_;
-        admin       = admin_;
+        admin       = owner_;
         live        = true;
     }
-
-
-    // --- Manipulation ---
-    // function fill(bytes32 index, address u) external note {
-    //     require(live == true, "vault/not-live");
-    //
-    // }
 
 
     // --- Administration ---
@@ -71,7 +63,6 @@ contract Vault is DSNote{
 
 
     // --- Math ---
-
     function either(bool x, bool y) internal pure returns (bool z) {
         assembly{ z := or(x, y)}
     }
