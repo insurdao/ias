@@ -1,11 +1,10 @@
-
 ```
  _ __ _ ____ _  _ ____ ___  ____ ____
  | | \| ==== |__| |--< |__> |--| [__]
 
 ```
 
-## IAS - Insurance Autonomous System
+IAS - Insurance Autonomous System
 
 ## Introduction
 
@@ -30,7 +29,8 @@ Risk Parameters:
 * rad: a fixed point integer, with 10^45 decimal places.
 * file: administer some configuration value
 * guy, usr: some address
-* ilk - collateral type, each has its own set of risk parameters
+* ilk - collateral type, each has its own set of risk parameters [specie
+    synonymous]
 * valut - the solvency
 
 * auth: check whether an address can call this method

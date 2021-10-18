@@ -18,7 +18,7 @@ interface ClaimLike {}
 
 contract Boss is DSAuth, DSNote {
   mapping (bytes32 => address) public policies;
-  mapping (address => Vault) public vaults;
+  //mapping (address => Vault) public vaults;
 
   mapping (address => mapping (bytes32 => mapping (address => bool))) public allows;
 
@@ -36,10 +36,10 @@ contract Boss is DSAuth, DSNote {
 
 
   /// create a vault, add to the vault collection with the sender as owner
-  function open(address token, address usr) public note returns (uint) {
-    require(vaults[msg.sender] = Vault(0));
-    vaults[msg.sender] = new Vault("test", msg.sender);
-  }
+  // function open(address token, address usr) public note returns (uint) {
+  //   require(vaults[msg.sender] = Vault(0));
+  //   vaults[msg.sender] = new Vault("test", msg.sender);
+  // }
 
 
     // function increment() public {
@@ -65,34 +65,34 @@ contract Boss is DSAuth, DSNote {
       require((z = x - y) <= x);
   }
 }
-contract Counter {
-
-    uint256 private _count;
-    address private _owner;
-    address private _factory;
-
-
-     modifier onlyOwner(address caller) {
-        require(caller == _owner, "You're not the owner of the contract");
-        _;
-    }
-
-    modifier onlyFactory() {
-        require(msg.sender == _factory, "You need to use the factory");
-        _;
-    }
-
-     constructor(address owner) public {
-        _owner = owner;
-        _factory = msg.sender;
-    }
-
-     function getCount() public view returns (uint256) {
-        return _count;
-    }
-
-    function increment(address caller) public onlyFactory onlyOwner(caller) {
-        _count++;
-    }
-
-}
+// contract Counter {
+//
+//     uint256 private _count;
+//     address private _owner;
+//     address private _factory;
+//
+//
+//      modifier onlyOwner(address caller) {
+//         require(caller == _owner, "You're not the owner of the contract");
+//         _;
+//     }
+//
+//     modifier onlyFactory() {
+//         require(msg.sender == _factory, "You need to use the factory");
+//         _;
+//     }
+//
+//      constructor(address owner) public {
+//         _owner = owner;
+//         _factory = msg.sender;
+//     }
+//
+//      function getCount() public view returns (uint256) {
+//         return _count;
+//     }
+//
+//     function increment(address caller) public onlyFactory onlyOwner(caller) {
+//         _count++;
+//     }
+//
+// }

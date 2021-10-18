@@ -15,19 +15,11 @@ ledger cashflows, facilitating audit, emergency shutdown and disolution.
 */
 
 contract Vault is DSNote{
-    // --- Data ---
-    mapping (bytes32 => mapping (address => uint256 )) public vaults;
-
     bool        public live;
     int         public vid;                 // Auto-increment
     string      public name;                // Vault name
     address     public admin;
     address[]   public members;
-
-    struct Urn {
-        uint256 locked;                     // Locked Collateral [amount]
-        uint256 debt;                       // Normalised Debt   [amount]
-    }
 
     // --- Auth ---
     mapping (address => uint256) public wards;
@@ -40,6 +32,19 @@ contract Vault is DSNote{
     function wish(address bit, address usr) internal view returns (bool) {
         return either(bit == usr, can[bit][usr] == 1);
     }
+
+    // --- Data ---
+    struct Ilk {
+        uint256 cap;    // Max Claim Withdraw   [percent]
+    }
+
+    struct Urn {
+        uint256 ink;    // Locked Collateral    [wad]
+    }
+
+    mapping (bytes32 => Ilk)                            public ilks;
+    mapping (bytes32 => mapping (address => Urn ))      public urns;
+
 
     // --- Modifiers ---
     modifier auth {
@@ -57,6 +62,8 @@ contract Vault is DSNote{
 
 
     // --- Administration ---
+    // function init()
+    // function file() // set cap for ilk
     function stop() external note auth {
         live = false;
     }
