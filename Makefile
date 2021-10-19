@@ -1,12 +1,9 @@
-
-
-SOLC_VERSION=0.8.6
-
 all    :; dapp --use solc:$(SOLC_VERSION) build
 clean  :; dapp clean
 test   :; dapp --use solc:$(SOLC_VERSION) -v test
 deploy :; dapp --use solc:$(SOLC_VERSION) create Mutual
 
+SOLC_VERSION=0.8.6
 
 # auto-recompile [install inotify-tools before]
 watch-compile:

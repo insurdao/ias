@@ -15,10 +15,7 @@ ledger cashflows, facilitating audit, emergency shutdown and disolution.
 */
 
 contract Vault is DSNote{
-    bool        public live;
-    int         public vid;                 // Auto-increment
-    string      public name;                // Vault name
-    address     public admin;
+    int         public live;
     address[]   public members;
 
     // --- Auth ---
@@ -35,15 +32,14 @@ contract Vault is DSNote{
 
     // --- Data ---
     struct Ilk {
-        uint256 cap;    // Max Claim Withdraw   [percent]
+        uint256 tot;    // Total Locked From Vaults [wad]
+        uint256 floor;  // Max Claim Withdraw     [percent]
     }
 
-    struct Urn {
-        uint256 ink;    // Locked Collateral    [wad]
-    }
 
-    mapping (bytes32 => Ilk)                            public ilks;
-    mapping (bytes32 => mapping (address => Urn ))      public urns;
+    mapping (bytes32 => Ilk)                        public ilks;
+    mapping (bytes32 => mapping (address => uint))  public gems;
+    mapping (bytes32 => mapping (address => uint))  public jail;  // [wad]
 
 
     // --- Modifiers ---
@@ -52,20 +48,17 @@ contract Vault is DSNote{
         _;
     }
 
-
     // --- Init ----
-    constructor(string memory name_, address owner_) {
-        name        = name_;
-        admin       = owner_;
-        live        = true;
+    constructor() {
+        wards[msg.sender] = 1;
+        live = 1;
     }
-
 
     // --- Administration ---
     // function init()
     // function file() // set cap for ilk
     function stop() external note auth {
-        live = false;
+        live = 0;
     }
 
 
@@ -100,5 +93,17 @@ contract Vault is DSNote{
     function mul(uint x, uint y) internal pure returns (uint z) {
         require(y == 0 || (z = x * y) / y == x);
     }
+
+
+    // --- Add Capital ---
+    function fill(uint rad) external note auth {
+        require(live == 1, "vault/not-live");
+        address u = msg.sender;
+    }
+
+
+    // function lock - lock collateral to pay a claim into a jail
+    // function free - unlock unused claim from jail
+    // function pick - only claim contract and stop shutdown can grab from locked
 
 }
