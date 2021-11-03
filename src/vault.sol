@@ -95,13 +95,6 @@ contract Vault is DSNote{
     }
 
 
-    // --- Add Capital ---
-    function fill(uint rad) external note auth {
-        require(live == 1, "vault/not-live");
-        address u = msg.sender;
-    }
-
-
     // function lock - lock collateral to pay a claim into a jail
     // function free - unlock unused claim from jail
     // function pick - only claim contract and stop shutdown can grab from locked

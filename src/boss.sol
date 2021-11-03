@@ -10,89 +10,118 @@ import "ds-note/note.sol";
 
 interface PolicyLike {
   function setPayout(uint256 payout) external;
-  // add all policy functions here
 }
 
+interface VaultLike {
+    function urns(bytes32, address) external view returns (uint, uint);
+    function hope(address) external;
+    function flux(bytes32, address, address, uint) external;
+    function move(address, address, uint) external;
+    function frob(bytes32, address, address, address, int, int) external;
+    function fork(bytes32, address, address, int, int) external;
+}
 
 interface ClaimLike {}
 
-contract Boss is DSAuth, DSNote {
-  mapping (bytes32 => address) public policies;
-  //mapping (address => Vault) public vaults;
-
-  mapping (address => mapping (bytes32 => mapping (address => bool))) public allows;
-
-  // event NewPolicy(address indexed guy, bytes12 cdp);
-
-  uint256                   public poli;      // Auto incremental
-  mapping (uint => address) public owns;      // PolicyId => Owner
-  // Policy repository [to be used in the groups]
-  //Policy policy[];
-
-
-  constructor(address owner_) {
-    owner = owner_;
-  }
-
-
-  /// create a vault, add to the vault collection with the sender as owner
-  // function open(address token, address usr) public note returns (uint) {
-  //   require(vaults[msg.sender] = Vault(0));
-  //   vaults[msg.sender] = new Vault("test", msg.sender);
-  // }
-
-
-    // function increment() public {
-    //     require (_counters[msg.sender] != Counter(0));
-    //     Counter(_counters[msg.sender]).increment(msg.sender);
-    // }
-    //
-    // function getCount(address account) public view returns (uint256) {
-    //     require (_counters[account] != Counter(0));
-    //     return (_counters[account].getCount());
-    // }
-    //
-    // function getMyCount() public view returns (uint256) {
-    //     return (getCount(msg.sender));
-    // }
-
-  // --- Math ---
-  function add(uint x, uint y) internal pure returns (uint z) {
-      require((z = x + y) >= x);
-  }
-
-  function sub(uint x, uint y) internal pure returns (uint z) {
-      require((z = x - y) <= x);
-  }
+contract UrnHandler {
+    constructor(address vat) {
+        VaultLike(vat).hope(msg.sender);
+    }
 }
-// contract Counter {
-//
-//     uint256 private _count;
-//     address private _owner;
-//     address private _factory;
-//
-//
-//      modifier onlyOwner(address caller) {
-//         require(caller == _owner, "You're not the owner of the contract");
-//         _;
-//     }
-//
-//     modifier onlyFactory() {
-//         require(msg.sender == _factory, "You need to use the factory");
-//         _;
-//     }
-//
-//      constructor(address owner) public {
-//         _owner = owner;
-//         _factory = msg.sender;
-//     }
-//
-//      function getCount() public view returns (uint256) {
-//         return _count;
-//     }
-//
-//     function increment(address caller) public onlyFactory onlyOwner(caller) {
-//         _count++;
-//     }
-//
-// }
+
+contract Boss is DSAuth, DSNote {
+    address                   public vault;
+    uint                      public cdpi;      // Auto incremental
+    mapping (uint => address) public urns;      // CDPId => UrnHandler
+    mapping (uint => List)    public list;      // CDPId => Prev & Next CDPIds (double linked list)
+    mapping (uint => address) public owns;      // CDPId => Owner
+    mapping (uint => bytes32) public ilks;      // CDPId => Ilk
+
+    mapping (address => uint) public first;     // Owner => First CDPId
+    mapping (address => uint) public last;      // Owner => Last CDPId
+    mapping (address => uint) public count;     // Owner => Amount of CDPs
+    mapping (
+        address => mapping (
+            uint => mapping (
+                address => uint
+            )
+        )
+    ) public cdpCan;                            // Owner => CDPId => Allowed Addr => True/False
+
+    mapping (
+        address => mapping (
+            address => uint
+        )
+    ) public urnCan;                            // Urn => Allowed Addr => True/False
+
+    struct List {
+        uint prev;
+        uint next;
+    }
+
+    event NewCdp(address indexed usr, address indexed own, uint indexed cdp);
+
+    modifier cdpAllowed(
+        uint cdp
+    ) {
+        require(msg.sender == owns[cdp] || cdpCan[owns[cdp]][cdp][msg.sender] == 1, "cdp-not-allowed");
+        _;
+    }
+
+    modifier urnAllowed(
+        address urn
+    ) {
+        require(msg.sender == urn || urnCan[urn][msg.sender] == 1, "urn-not-allowed");
+        _;
+    }
+
+
+    mapping (address => mapping (bytes32 => mapping (address => bool))) public allows;
+
+
+    constructor(address vault_) {
+      vault = vault_;
+    }
+
+    // Open a new cdp for a given usr address.
+    function open(
+        bytes32 ilk,
+        address usr
+    ) public note returns (uint) {
+        require(usr != address(0), "usr-address-0");
+
+        cdpi = add(cdpi, 1);
+        urns[cdpi] = address(new UrnHandler(vault));
+        owns[cdpi] = usr;
+        ilks[cdpi] = ilk;
+
+        // Add new CDP to double linked list and pointers
+        if (first[usr] == 0) {
+            first[usr] = cdpi;
+        }
+        if (last[usr] != 0) {
+            list[cdpi].prev = last[usr];
+            list[last[usr]].next = cdpi;
+        }
+        last[usr] = cdpi;
+        count[usr] = add(count[usr], 1);
+
+        emit NewCdp(msg.sender, usr, cdpi);
+        return cdpi;
+    }
+
+
+    // --- Math ---
+    function add(uint x, uint y) internal pure returns (uint z) {
+        require((z = x + y) >= x);
+    }
+
+    function sub(uint x, uint y) internal pure returns (uint z) {
+        require((z = x - y) <= x);
+    }
+
+    function toInt(uint x) internal pure returns (int y) {
+        y = int(x);
+        require(y >= 0);
+    }
+}
