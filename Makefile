@@ -7,10 +7,10 @@ SOLC_VERSION=0.8.6
 
 # auto-recompile [install inotify-tools before]
 watch-compile:
-	while inotifywait -e close_write ./src/*.sol; do dapp --use solc:$(SOLC_VERSION) build; done
+	while inotifywait -e close_write ./src/*; do dapp --use solc:$(SOLC_VERSION) build; done
 
 watch-test:
-	while inotifywait -e close_write ./src/*.sol; do dapp --use solc:$(SOLC_VERSION) -v test; done
+	while inotifywait -e close_write ./src/*; do dapp --use solc:$(SOLC_VERSION) -v test; done
 
 optimze:
 	DAPP_STANDARD_JSON="config.json" \
