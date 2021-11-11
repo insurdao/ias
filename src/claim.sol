@@ -30,6 +30,11 @@ contract Claim is DSNote{
     address     public claimer;
     uint256     public payout;
     State       public state;
+     // string ipfsHash;
+     // bytes32 coverId;
+     // address owner;
+     // uint incidentDate;
+     // function _setClaimStatus(uint claimId, uint stat) 
 
     // --- State Machine ---
 

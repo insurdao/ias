@@ -8,9 +8,9 @@ import "ds-note/note.sol";
 
 
 // TODO setup number types [wad, etc..]
-contract Policy is DSNote {
-    int         public pid;                 // Policy ID
-    string      public name;                // Policy name 
+contract Cover is DSNote {
+    int         public pid;                 // Cover ID
+    string      public name;                // Cover name 
     uint256     public premium;             // Dynamic paid premium
     uint256     public premium_max;         // Max cap premium for this policy
     uint256     public payout;              // Dynamic payout coverage
